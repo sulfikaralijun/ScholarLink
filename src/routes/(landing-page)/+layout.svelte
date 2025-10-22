@@ -3,28 +3,9 @@
 	import type { LayoutProps } from '../$types';
 	import favicon from '$lib/assets/favicon.svg';
 	import logo from '$lib/assets/logo.svg';
-	import { invalidate, goto } from '$app/navigation';
-	import { onMount } from 'svelte';
 	import { Mail, MapPin, Phone } from 'lucide-svelte';
-
+	import Logo from '$lib/components/Logo.svelte';
 	let { data, children }: LayoutProps = $props();
-	let { session, supabase, user } = $derived(data);
-
-	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-			if (newSession?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-		return () => data.subscription.unsubscribe();
-	});
-
-	// Redirect to dashboard if user is already logged in
-	$effect(() => {
-		if (session && user) {
-			goto('/dashboard');
-		}
-	});
 </script>
 
 <svelte:head>
@@ -33,21 +14,13 @@
 
 <div class="flex h-screen min-h-screen flex-col bg-white">
 	<header class="flex items-center justify-between px-10 py-3 shadow-sm">
-		<a href="/" id="logo" class="flex items-center text-2xl font-bold">
-			<img src={logo} alt="" class="h-10 w-10" />
-			<span class="text-primary">Scholar<span class="text-secondary">Link</span></span>
-		</a>
+		<Logo />
 		<nav class="[&>a]: text text-primary flex gap-6 text-lg">
 			<a href="/">Beranda</a>
 			<a href="/beasiswa">Beasiswa</a>
 		</nav>
 		<div>
-			{#if session && user}
-				<a href="/dashboard" class="btn btn-primary">Dashboard</a>
-			{:else}
-				<a href="/login" class="btn btn-ghost btn-secondary hover:text-white">Masuk</a>
-				<a href="/register" class="btn btn-secondary">Daftar</a>
-			{/if}
+			<a href="/subscriptions" class="btn btn-secondary">Daftar</a>
 		</div>
 	</header>
 	<main class="flex-1 bg-inherit">
