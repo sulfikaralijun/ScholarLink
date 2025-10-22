@@ -1,127 +1,105 @@
 <script lang="ts">
-	import { LogOut, User, Bell, BookOpen, Search } from 'lucide-svelte';
-	import type { PageData } from './$types';
+	import type { PageProps } from "./$types";
+	import { Shield, BarChart3, BookOpen, Mail } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 
-	let { data, form }: { data: PageData; form: any } = $props();
-	let { session, user } = $derived(data);
+	let {data}: PageProps = $props();
+	
+	// Type assertion untuk admin data
+	const admin = (data as any)?.admin || {};
+	let stats = $state({
+		totalBeasiswa: 0,
+		activeBeasiswa: 0,
+		expiredBeasiswa: 0,
+		totalSubscribers: 0
+	});
+
+	async function loadStats() {
+		try {
+			const response = await fetch('/api/v1/dashboard/stats');
+			const data = await response.json();
+			stats = data;
+		} catch (error) {
+			console.error('Error loading stats:', error);
+		}
+	}
+
+	onMount(() => {
+		loadStats();
+	});
 </script>
 
 <svelte:head>
-	<title>Dashboard - ScholarLink</title>
+	<title>Overview - ScholarLink Dashboard</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
-	<!-- Header -->
-	<header class="border-b bg-white shadow-sm">
-		<div class="px-6 py-4">
-			<div class="flex items-center justify-between">
-				<div>
-					<h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-					<p class="text-gray-600">
-						Selamat datang, {user?.user_metadata?.full_name || user?.email}!
-					</p>
+<!-- Overview Content -->
+<div class="space-y-6">
+	<!-- Stats Cards -->
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+		<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+			<div class="flex items-center">
+				<div class="p-3 bg-blue-100 rounded-lg">
+					<BookOpen size={24} class="text-blue-600" />
 				</div>
-				<div class="flex items-center gap-4">
-					<button class="btn btn-ghost btn-sm">
-						<Bell size={20} />
-					</button>
-					<div class="dropdown dropdown-end">
-						<div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-							<div
-								class="bg-primary text-primary-content flex w-10 items-center justify-center rounded-full">
-								<User size={20} />
-							</div>
-						</div>
-						<ul
-							tabindex="0"
-							class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-							<li><button type="button" role="button">Profil</button></li>
-							<li><button type="button" role="button">Pengaturan</button></li>
-							<li>
-								<form method="POST" action="?/logout">
-									<button type="submit" class="w-full text-left">Logout</button>
-								</form>
-							</li>
-						</ul>
-					</div>
+				<div class="ml-4">
+					<p class="text-sm font-medium text-gray-500">Total Beasiswa</p>
+					<p class="text-2xl font-semibold text-gray-900">{stats.totalBeasiswa}</p>
 				</div>
 			</div>
 		</div>
-	</header>
-
-	<!-- Main Content -->
-	<main class="p-6">
-		<!-- Stats Cards -->
-		<div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-			<div class="rounded-lg bg-white p-6 shadow">
-				<div class="flex items-center">
-					<div class="bg-primary/10 text-primary rounded-full p-3">
-						<BookOpen size={24} />
-					</div>
-					<div class="ml-4">
-						<p class="text-sm font-medium text-gray-600">Beasiswa Diikuti</p>
-						<p class="text-2xl font-bold text-gray-900">0</p>
-					</div>
+		
+		<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+			<div class="flex items-center">
+				<div class="p-3 bg-green-100 rounded-lg">
+					<Shield size={24} class="text-green-600" />
 				</div>
-			</div>
-
-			<div class="rounded-lg bg-white p-6 shadow">
-				<div class="flex items-center">
-					<div class="bg-secondary/10 text-secondary rounded-full p-3">
-						<Bell size={24} />
-					</div>
-					<div class="ml-4">
-						<p class="text-sm font-medium text-gray-600">Notifikasi</p>
-						<p class="text-2xl font-bold text-gray-900">0</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="rounded-lg bg-white p-6 shadow">
-				<div class="flex items-center">
-					<div class="bg-accent/10 text-accent rounded-full p-3">
-						<Search size={24} />
-					</div>
-					<div class="ml-4">
-						<p class="text-sm font-medium text-gray-600">Pencarian</p>
-						<p class="text-2xl font-bold text-gray-900">0</p>
-					</div>
+				<div class="ml-4">
+					<p class="text-sm font-medium text-gray-500">Aktif</p>
+					<p class="text-2xl font-semibold text-gray-900">{stats.activeBeasiswa}</p>
 				</div>
 			</div>
 		</div>
-
-		<!-- Quick Actions -->
-		<div class="mb-8 rounded-lg bg-white p-6 shadow">
-			<h2 class="mb-4 text-xl font-semibold">Aksi Cepat</h2>
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-				<a href="/beasiswa" class="btn btn-outline btn-primary">
-					<Search size={20} />
-					Cari Beasiswa
-				</a>
-				<button class="btn btn-outline btn-secondary">
-					<Bell size={20} />
-					Atur Notifikasi
-				</button>
-				<button class="btn btn-outline btn-accent">
-					<BookOpen size={20} />
-					Riwayat Aplikasi
-				</button>
-				<button class="btn btn-outline">
-					<User size={20} />
-					Edit Profil
-				</button>
+		
+		<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+			<div class="flex items-center">
+				<div class="p-3 bg-red-100 rounded-lg">
+					<BarChart3 size={24} class="text-red-600" />
+				</div>
+				<div class="ml-4">
+					<p class="text-sm font-medium text-gray-500">Expired</p>
+					<p class="text-2xl font-semibold text-gray-900">{stats.expiredBeasiswa}</p>
+				</div>
 			</div>
 		</div>
-
-		<!-- Recent Activity -->
-		<div class="rounded-lg bg-white p-6 shadow">
-			<h2 class="mb-4 text-xl font-semibold">Aktivitas Terbaru</h2>
-			<div class="py-8 text-center text-gray-500">
-				<BookOpen size={48} class="mx-auto mb-4 opacity-50" />
-				<p>Belum ada aktivitas</p>
-				<p class="text-sm">Mulai jelajahi beasiswa untuk melihat aktivitas di sini</p>
-				<a href="/beasiswa" class="btn btn-primary mt-4">Jelajahi Beasiswa</a>
+		
+		<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+			<div class="flex items-center">
+				<div class="p-3 bg-purple-100 rounded-lg">
+					<Mail size={24} class="text-purple-600" />
+				</div>
+				<div class="ml-4">
+					<p class="text-sm font-medium text-gray-500">Subscribers</p>
+					<p class="text-2xl font-semibold text-gray-900">{stats.totalSubscribers}</p>
+				</div>
 			</div>
 		</div>
-	</main>
+	</div>
+
+	<!-- Welcome Card -->
+	<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+		<div class="flex items-center gap-3">
+			<div class="p-3 bg-primary/10 rounded-lg">
+				<Shield size={24} class="text-primary" />
+			</div>
+			<div>
+				<h3 class="text-lg font-semibold">Selamat Datang, {admin.nama}!</h3>
+				<p class="text-gray-500">Kelola informasi beasiswa dengan mudah</p>
+			</div>
+		</div>
+		<p class="mt-4 text-gray-600">
+			Dashboard ScholarLink memberikan Anda kontrol penuh untuk mengelola informasi beasiswa, 
+			email subscribers, dan sistem. Gunakan navigasi di atas untuk mengakses fitur-fitur yang tersedia.
+		</p>
+	</div>
 </div>
