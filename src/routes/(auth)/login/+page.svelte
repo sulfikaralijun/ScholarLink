@@ -1,9 +1,10 @@
 <script lang="ts">
 	import logo from '$lib/assets/logo.svg';
 	import { Mail, Lock, Eye, EyeOff } from 'lucide-svelte';
-	import type { PageData } from './$types';
+	import type { PageProps } from './$types';
 
-	let { data }: { data: PageData; form: any } = $props();
+	let { data, form }: PageProps = $props();
+	console.log(form);
 
 	let showPassword = $state(false);
 	let loading = $state(false);
@@ -29,7 +30,16 @@
 		<p class="mt-2 text-gray-500">Masuk ke akun ScholarLink Anda</p>
 	</div>
 
-	<form method="POST" action="?/default" onsubmit={handleSubmit} class="mt-8 flex flex-col gap-4">
+	<!-- Error Message -->
+	{#if form?.error}
+		<div class="alert alert-error mt-4">
+			<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+			<span>{form.error}</span>
+		</div>
+	{/if}
+
+	<form method="POST"
+	 class="mt-8 flex flex-col gap-4">
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Email</legend>
 			<label class="input w-full bg-gray-50">
@@ -91,8 +101,7 @@
 
 		<div class="mt-2 text-center">
 			<p class="text-sm text-gray-500">
-				Belum punya akun? <a href="/register" class="text-primary font-semibold hover:underline"
-					>Daftar Sekarang</a>
+				Platform informasi beasiswa untuk semua kalangan
 			</p>
 		</div>
 	</form>
