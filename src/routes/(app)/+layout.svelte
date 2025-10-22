@@ -1,16 +1,33 @@
 <script lang="ts">
+	import Logo from "$lib/components/Logo.svelte";
+    import "$lib/styles/app.css";
+	import { LogOut } from "lucide-svelte";
 	import type { LayoutProps } from './$types';
 
-	import { invalidate } from '$app/navigation';
-	import { onMount } from 'svelte';
 	let { data, children }: LayoutProps = $props();
-	let { session, supabase } = $derived(data);
-	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-			if (newSession?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-		return () => data.subscription.unsubscribe();
-	});
+	const { session } = data;
+
+	function handleLogout() {
+		window.location.href = '/api/v1/auth/logout';
+	}
 </script>
+
+<div class="min-h-screen bg-gray-50 flex flex-col">
+	<header class="bg-white shadow-sm border-b border-gray-200">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex justify-between items-center h-16">
+				<div class="flex items-center gap-2">
+					<Logo />
+					<span class="text-sm text-gray-500">{session.role === 'super_admin' ? 'Super Admin' : 'Admin'}</span>
+				</div>
+				<div>
+					<button onclick={handleLogout} class="btn btn-ghost btn-sm text-red-600 hover:bg-red-50">
+						<LogOut size={16} />
+						Logout
+					</button>
+				</div>
+			</div>
+		</div>
+	</header>
+	{@render children?.()}
+</div>
