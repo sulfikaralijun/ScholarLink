@@ -1,6 +1,7 @@
 <script lang="ts">
+  import "$lib/styles/app.css";
+	import { goto } from "$app/navigation";
 	import Logo from "$lib/components/Logo.svelte";
-    import "$lib/styles/app.css";
 	import { LogOut } from "lucide-svelte";
 	import type { LayoutProps } from './$types';
 
@@ -8,7 +9,7 @@
 	const { session } = data;
 
 	function handleLogout() {
-		window.location.href = '/api/v1/auth/logout';
+		goto("/api/v1/auth/logout")
 	}
 </script>
 
