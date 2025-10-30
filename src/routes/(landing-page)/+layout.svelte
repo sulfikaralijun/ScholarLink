@@ -1,16 +1,13 @@
 <script lang="ts">
-	import '$lib/styles/app.css';
-	import type { LayoutProps } from '../$types';
-	import favicon from '$lib/assets/favicon.svg';
-	import logo from '$lib/assets/logo.svg';
-	import { Mail, MapPin, Phone } from 'lucide-svelte';
-	import Logo from '$lib/components/Logo.svelte';
-	let { data, children }: LayoutProps = $props();
-</script>
+	import type { LayoutProps } from './$types';
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+	import { Mail, MapPin, Phone } from 'lucide-svelte';
+
+	import Logo from '$lib/components/Logo.svelte';
+
+
+	let { children }: LayoutProps = $props();
+</script>
 
 <div class="flex h-screen min-h-screen flex-col bg-white">
 	<header class="flex items-center justify-between px-10 py-3 shadow-sm">
@@ -20,7 +17,7 @@
 			<a href="/beasiswa">Beasiswa</a>
 		</nav>
 		<div>
-			<a href="/subscriptions" class="btn btn-secondary">Daftar</a>
+			<a href="/subscription" class="btn btn-secondary">Daftar</a>
 		</div>
 	</header>
 	<main class="flex-1 bg-inherit">
@@ -29,11 +26,10 @@
 		{/if}
 	</main>
 	<footer id="footer" class="border-t border-gray-200 bg-white px-20 py-10">
-		<div class="grid grid-cols-4 border-b border-gray-200 pb-8">
+		<div class="grid grid-cols-4 gap-2 border-b border-gray-200 pb-8">
 			<div class="flex flex-col gap-3">
 				<div class="flex items-center">
-					<img src={logo} alt="logo" class="w-10" />
-					<h3 class="text-xl font-bold">ScholarLink</h3>
+					<Logo/>
 				</div>
 				<p class="text-sm text-gray-500">
 					Platform informasi beasiswa terlengkap untuk mewujudkan impian pendidikanmu.
@@ -45,16 +41,16 @@
 					class="[&>li]: [&>li>a]:hover:text-primary flex cursor-pointer flex-col gap-2 text-sm text-gray-500">
 					<li><a href="/">Beranda</a></li>
 					<li><a href="/beasiswa">Beasiswa</a></li>
-					<li><a href="/dashboard">Tentang Kami</a></li>
+					<li><a href="/#about">Tentang Kami</a></li>
 				</ul>
 			</div>
 			<div class="flex flex-col gap-3">
 				<h3 class="text-md font-semibold">Dukungan</h3>
 				<ul
 					class="[&>li]: [&>li>a]:hover:text-primary flex cursor-pointer flex-col gap-2 text-sm text-gray-500">
-					<li><a href="/">FAQ</a></li>
-					<li><a href="/beasiswa">Panduan</a></li>
-					<li><a href="/dashboard">Kontak</a></li>
+					<li><a href="#">FAQ</a></li>
+					<li><a href="#">Panduan</a></li>
+					<li><a href="#">Kontak</a></li>
 				</ul>
 			</div>
 			<div class="flex flex-col gap-3">
@@ -77,7 +73,7 @@
 			</div>
 		</div>
 		<div class="mt-5 text-center text-sm text-gray-500">
-			<p>&copy; <span>{new Date().getFullYear()}</span> ScholarLink. All Rights Reserved.</p>
+			<p>&copy; <span>2025</span> ScholarLink. All Rights Reserved.</p>
 		</div>
 	</footer>
 </div>

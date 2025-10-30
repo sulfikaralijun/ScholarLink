@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { Search, Bell, Shield, BookOpen, Mail, Phone, MapPin } from 'lucide-svelte';
 	const features = [
 		{
@@ -28,7 +29,7 @@
 	<title>Beranda - ScholarLink</title>
 </svelte:head>
 
-<section id="hero" class="flex flex-col items-center bg-primary/95">
+<section id="hero" class="bg-primary/95 flex flex-col items-center">
 	<h1 class="mt-35 text-center text-6xl font-bold text-white">
 		Temukan Beasiswa Sesuai <br /> Impianmu
 	</h1>
@@ -38,9 +39,11 @@
 
 	<div class="mt-10 mb-15 flex items-center gap-5">
 		<button
-			class="cursor-pointer rounded-xl bg-secondary px-8 py-6 text-lg font-medium hover:bg-secondary/90"
-			>Lihat Beasiswa -></button>
+			onclick={() => goto('/beasiswa')}
+			class="bg-secondary hover:bg-secondary/90 cursor-pointer rounded-xl px-8 py-6 text-lg font-medium"
+			>Lihat Beasiswa</button>
 		<button
+			onclick={() => goto('/subscription')}
 			class="cursor-pointer rounded-xl bg-white/10 px-8 py-6 text-lg font-medium text-white outline outline-gray-400 hover:bg-white/20"
 			>Daftar Sekarang</button>
 	</div>
@@ -49,7 +52,7 @@
 <section id="about" class="bg-white py-20">
 	<h1 class="mb-5 text-center text-4xl font-bold">Tentang ScholarLink</h1>
 	<p class="mx-auto mb-20 max-w-3xl text-center text-lg text-gray-500">
-		Kami adalah platform yang berkomitmen untuk membantu pelajar Indonesia menemukan peluang
+		Kami adalah platform yang berkomitmen untuk membantu mahasiswa Indonesia menemukan peluang
 		beasiswa terbaik untuk mencapai impian pendidikan mereka.
 	</p>
 </section>
@@ -64,7 +67,7 @@
 		{#each features as { icon: Icon, title, desc }}
 			<div
 				class="flex flex-col items-center gap-3 rounded-xl border border-gray-200 bg-white p-5 shadow">
-				<div class="rounded-full bg-gray-200 p-5 text-primary">
+				<div class="text-primary rounded-full bg-gray-200 p-5">
 					<Icon size={24} />
 				</div>
 				<h3 class="text-xl font-semibold">{title}</h3>
@@ -75,14 +78,16 @@
 </section>
 <section
 	id="cta"
-	class="flex flex-col items-center gap-8 border-b border-gray-200 bg-primary/95 pt-20">
+	class="bg-primary/95 flex flex-col items-center gap-8 border-b border-gray-200 pt-20">
 	<h1 class="text-4xl font-bold text-white">Siap Memulai Perjalanan Beasiswamu?</h1>
 	<p class="text-xl text-white">Daftar sekarang dan temukan beasiswa yang tepat untukmu</p>
 	<div class="mb-15 flex items-center gap-5">
 		<button
-			class="cursor-pointer rounded-xl bg-secondary px-8 py-6 text-lg font-medium hover:bg-secondary/90"
+			onclick={() => goto('/subscription')}
+			class="bg-secondary hover:bg-secondary/90 cursor-pointer rounded-xl px-8 py-6 text-lg font-medium"
 			>Daftar Gratis</button>
 		<button
+			onclick={() => goto('/beasiswa')}
 			class="cursor-pointer rounded-xl bg-white/10 px-8 py-6 text-lg font-medium text-white outline outline-gray-400 hover:bg-white/20"
 			>Jelajah Beasiswa</button>
 	</div>
