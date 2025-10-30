@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.8">
+  <diagram id="usecase-1" name="Use Cases">
+    <mxGraphModel dx="1787" dy="927" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actorVisitor" value="Visitor" style="shape=umlActor;verticalAlign=top;html=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="60" y="140" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actorSubscriber" value="Subscriber" style="shape=umlActor;verticalAlign=top;html=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="60" y="360" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actorAdmin" value="Admin" style="shape=umlActor;verticalAlign=top;html=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="1460" y="160" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actorSuperAdmin" value="Super Admin" style="shape=umlActor;verticalAlign=top;html=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="1460" y="360" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sysBoundary" value="ScholarLink System" style="swimlane;whiteSpace=wrap;html=1;rounded=1;childLayout=stackLayout;horizontal=1;startSize=40;container=1;resizeParent=0;collapsible=0;fillColor=#F9FAFB;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="60" width="1160" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="ucBrowse" value="Lihat Daftar Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="60" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucSearch" value="Cari Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="130" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucFilter" value="Filter Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="200" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucDetail" value="Lihat Detail Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="270" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucSubscribe" value="Berlangganan Email" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="340" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucConfirm" value="Konfirmasi Berlangganan\n(Double Opt-in)" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="410" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ucUnsub" value="Berhenti Berlangganan" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="60" y="490" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucLogin" value="Login Admin" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="780" y="60" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucDashboard" value="Lihat Dashboard &amp; Statistik" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="720" y="130" width="260" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucCreate" value="Tambah Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="740" y="210" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucEdit" value="Edit Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="740" y="280" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucDelete" value="Hapus Beasiswa" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="740" y="350" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucBroadcast" value="Broadcast Beasiswa Baru" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="720" y="420" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucAdminMgmt" value="Kelola Admin" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="740" y="500" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ucSystem" value="Akses Halaman Sistem" style="shape=ellipse;whiteSpace=wrap;html=1;" parent="sysBoundary" vertex="1">
+          <mxGeometry x="730" y="570" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="eV6" style="dashed=1;endArrow=open;html=1;" parent="sysBoundary" source="ucSubscribe" target="ucConfirm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eInc1" style="dashed=1;endArrow=open;html=1;" parent="sysBoundary" source="ucCreate" target="ucBroadcast" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eV1" style="endArrow=block;html=1;" parent="1" source="actorVisitor" target="ucBrowse" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eV2" style="endArrow=block;html=1;" parent="1" source="actorVisitor" target="ucSearch" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eV3" style="endArrow=block;html=1;" parent="1" source="actorVisitor" target="ucFilter" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eV4" style="endArrow=block;html=1;" parent="1" source="actorVisitor" target="ucDetail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eV5" style="endArrow=block;html=1;" parent="1" source="actorVisitor" target="ucSubscribe" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eS1" style="endArrow=block;html=1;" parent="1" source="actorSubscriber" target="ucUnsub" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eS2" style="endArrow=block;html=1;" parent="1" source="actorSubscriber" target="ucDetail" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eA1" style="endArrow=block;html=1;" parent="1" source="actorAdmin" target="ucLogin" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eA2" style="endArrow=block;html=1;" parent="1" source="actorAdmin" target="ucDashboard" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eA3" style="endArrow=block;html=1;" parent="1" source="actorAdmin" target="ucCreate" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eA4" style="endArrow=block;html=1;" parent="1" source="actorAdmin" target="ucEdit" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eA5" style="endArrow=block;html=1;" parent="1" source="actorAdmin" target="ucDelete" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eSA1" style="endArrow=block;html=1;" parent="1" source="actorSuperAdmin" target="ucAdminMgmt" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eSA2" style="endArrow=block;html=1;" parent="1" source="actorSuperAdmin" target="ucSystem" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eSA3" style="endArrow=block;html=1;" parent="1" source="actorSuperAdmin" target="ucDashboard" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

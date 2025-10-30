@@ -1,4 +1,4 @@
-import { env } from '$env/dynamic/private';
+import { env } from '$env/dynamic/public';
 import { RESEND_API_KEY } from '$env/static/private';
 import { Resend } from 'resend';
 
@@ -11,17 +11,17 @@ export type SendEmailParams = {
 };
 
 export async function sendEmail({ to, subject, html }: SendEmailParams) {
-  if (!env.RESEND_API_KEY) {
+  if (!RESEND_API_KEY) {
     console.error('RESEND_API_KEY is missing');
     return { error: 'Email service not configured' };
   }
-  if (!env.RESEND_EMAIL_FROM) {
+  if (!env.PUBLIC_RESEND_EMAIL_FROM) {
     console.error('EMAIL_FROM is missing');
     return { error: 'Sender not configured' };
   }
   try {
     const result = await resend.emails.send({
-      from: env.RESEND_EMAIL_FROM as string,
+      from: env.PUBLIC_RESEND_EMAIL_FROM as string,
       to,
       subject,
       html

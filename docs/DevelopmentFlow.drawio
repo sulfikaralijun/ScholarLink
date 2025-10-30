@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net" version="28.2.8">
+  <diagram id="devflow-1" name="Development Flow">
+    <mxGraphModel dx="1787" dy="927" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Swimlanes (optional roles) -->
+        <mxCell id="lanePM" value="PM/Stakeholder" style="swimlane;horizontal=1;rounded=1;startSize=28;fillColor=#F3F4F6;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="560" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="laneDev" value="Engineer" style="swimlane;horizontal=1;rounded=1;startSize=28;fillColor=#F9FAFB;" vertex="1" parent="1">
+          <mxGeometry x="60" y="240" width="560" height="400" as="geometry" />
+        </mxCell>
+
+        <!-- Nodes -->
+        <mxCell id="A" value="Inisiasi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E5F3FF;strokeColor=#60A5FA;" vertex="1" parent="1">
+          <mxGeometry x="120" y="90" width="140" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="B" value="Requirements\n(SRS &amp; Prioritas)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E5F3FF;strokeColor=#60A5FA;" vertex="1" parent="1">
+          <mxGeometry x="320" y="90" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="C" value="Desain\n(Arsitektur, DB, UI/UX)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#34D399;" vertex="1" parent="1">
+          <mxGeometry x="120" y="270" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="D" value="Implementasi\n(Code, Commit, PR)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#34D399;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="F" value="Review &amp; Integrasi\n(Code Review, Merge)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#F59E0B;" vertex="1" parent="1">
+          <mxGeometry x="360" y="340" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="G" value="Deployment\n(Build, Migrate, Release)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE4E6;strokeColor=#FB7185;" vertex="1" parent="1">
+          <mxGeometry x="120" y="420" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H" value="Maintenance\n(Bugfix, Ops)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE4E6;strokeColor=#FB7185;" vertex="1" parent="1">
+          <mxGeometry x="360" y="490" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" style="endArrow=block;html=1;" edge="1" parent="1" source="A" target="B"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="endArrow=block;html=1;" edge="1" parent="1" source="B" target="C"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="endArrow=block;html=1;" edge="1" parent="1" source="C" target="D"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="endArrow=block;html=1;" edge="1" parent="1" source="D" target="F"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="endArrow=block;html=1;" edge="1" parent="1" source="F" target="G"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" style="endArrow=block;html=1;" edge="1" parent="1" source="G" target="H"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" style="dashed=1;endArrow=open;html=1;" edge="1" parent="1" source="H" target="B"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+  </mxfile>
+
+
