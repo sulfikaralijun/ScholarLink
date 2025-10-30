@@ -10,6 +10,7 @@
 	let beasiswaList = $state<any[]>([]);
 	let loading = $state(false);
 	let showBeasiswaForm = $state(false);
+	let editingId: string | null = $state(null);
 	let formData = $state({
 		judul: '',
 		penyelenggara: '',
@@ -36,7 +37,7 @@
 		}
 	}
 
-	async function submitBeasiswaForm() {
+async function submitBeasiswaForm() {
 		formLoading = true;
 		formError = '';
 		
@@ -47,11 +48,11 @@
 				return;
 			}
 
-			const response = await fetch('/api/v1/beasiswa', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
+			const endpoint = editingId ? `/api/v1/beasiswa/${editingId}` : '/api/v1/beasiswa';
+			const method = editingId ? 'PUT' : 'POST';
+			const response = await fetch(endpoint, {
+				method,
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData)
 			});
 
@@ -68,6 +69,7 @@
 					link_pendaftaran: ''
 				};
 				showBeasiswaForm = false;
+				editingId = null;
 				
 				// Reload beasiswa list
 				await loadBeasiswa();
@@ -83,7 +85,7 @@
 		}
 	}
 
-	function openBeasiswaForm() {
+function openBeasiswaForm() {
 		showBeasiswaForm = true;
 		formError = '';
 	}
@@ -102,7 +104,39 @@
 			deskripsi: '',
 			link_pendaftaran: ''
 		};
+		editingId = null;
 	}
+
+function handleEdit(beasiswa: any) {
+	editingId = beasiswa.id_beasiswa;
+	formData = {
+		judul: beasiswa.judul || '',
+		penyelenggara: beasiswa.penyelenggara || '',
+		lokasi: beasiswa.lokasi || '',
+		kategori: beasiswa.kategori || '',
+		deadline: beasiswa.deadline ? new Date(beasiswa.deadline).toISOString().slice(0,16) : '',
+		tipe_pendanaan: beasiswa.tipe_pendanaan || '',
+		deskripsi: beasiswa.deskripsi || '',
+		link_pendaftaran: beasiswa.link_pendaftaran || ''
+	};
+	showBeasiswaForm = true;
+}
+
+async function handleDelete(id: string) {
+	if (!confirm('Yakin ingin menghapus beasiswa ini?')) return;
+	try {
+		const res = await fetch(`/api/v1/beasiswa/${id}`, { method: 'DELETE' });
+		if (!res.ok) {
+			const data = await res.json().catch(() => ({}));
+			alert(data?.error || 'Gagal menghapus beasiswa');
+			return;
+		}
+		await loadBeasiswa();
+	} catch (e) {
+		console.error('Delete beasiswa error:', e);
+		alert('Terjadi kesalahan saat menghapus');
+	}
+}
 
 	onMount(() => {
 		loadBeasiswa();
@@ -152,7 +186,7 @@
 						{#each beasiswaList as beasiswa}
 							<tr class="hover:bg-gray-50">
 								<td class="px-6 py-4 whitespace-nowrap">
-									<div class="text-sm font-medium text-gray-900">{beasiswa.judul}</div>
+								<div class="text-sm font-medium text-gray-900">{beasiswa.judul}</div>
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									<div class="text-sm text-gray-900">{beasiswa.penyelenggara}</div>
@@ -172,8 +206,8 @@
 									</span>
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-									<button class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
-									<button class="text-red-600 hover:text-red-900">Delete</button>
+							<button class="text-indigo-600 hover:text-indigo-900 mr-3" onclick={() => handleEdit(beasiswa)}>Edit</button>
+							<button class="text-red-600 hover:text-red-900" onclick={() => handleDelete(beasiswa.id_beasiswa)}>Delete</button>
 								</td>
 							</tr>
 						{/each}
