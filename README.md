@@ -65,3 +65,8 @@ pnpm preview
 - Resend untuk email
 
 
+## login admin acccount:
+
+route: /login (tidak disediakan navigation pada client, hanya internal team yg tau)
+email: admin@scholarlink.com
+password: admin123
