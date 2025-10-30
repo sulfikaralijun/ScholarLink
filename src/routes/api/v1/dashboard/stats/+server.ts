@@ -1,7 +1,9 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
+import { requireRole } from '$lib/server/auth';
 
-export async function GET() {
+export async function GET(event) {
+    requireRole(event as any, ['admin', 'super_admin']);
 	try {
 		const [totalBeasiswa, activeBeasiswa, expiredBeasiswa, totalSubscribers] = await Promise.all([
 			prisma.beasiswa.count(),

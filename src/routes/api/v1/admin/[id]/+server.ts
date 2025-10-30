@@ -1,8 +1,12 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 import { hashPassword } from '$lib/server/utils/passport';
+import { requireRole } from '$lib/server/auth';
+import { isEmail, trimObject, maxLength } from '$lib/server/validation';
 
-export async function GET({ params }) {
+export async function GET(event) {
+    const { params } = event as any;
+    requireRole(event as any, ['admin', 'super_admin']);
 	try {
 		const admin = await prisma.admin.findUnique({
 			where: { id_admin: parseInt(params.id) },
@@ -26,15 +30,25 @@ export async function GET({ params }) {
 	}
 }
 
-export async function PUT({ params, request }) {
+export async function PUT(event) {
+    const { params, request } = event as any;
+    requireRole(event as any, ['super_admin']);
 	try {
-		const data = await request.json();
+        const raw = await request.json();
+        const data = trimObject(raw);
 		
 		const updateData: any = {
 			nama: data.nama,
 			email: data.email,
 			role: data.role
 		};
+
+        if (!isEmail(updateData.email)) {
+            return json({ error: 'Invalid email' }, { status: 400 });
+        }
+        if (!maxLength(updateData.nama, 120)) {
+            return json({ error: 'Nama terlalu panjang' }, { status: 400 });
+        }
 
 		// Only update password if provided
 		if (data.password) {
@@ -60,7 +74,9 @@ export async function PUT({ params, request }) {
 	}
 }
 
-export async function DELETE({ params }) {
+export async function DELETE(event) {
+    const { params } = event as any;
+    requireRole(event as any, ['super_admin']);
 	try {
 		// Don't allow deleting the last super admin
 		const superAdminCount = await prisma.admin.count({

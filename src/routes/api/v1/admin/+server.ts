@@ -1,8 +1,11 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 import { hashPassword } from '$lib/server/utils/passport';
+import { requireRole } from '$lib/server/auth';
+import { isEmail, trimObject, maxLength } from '$lib/server/validation';
 
-export async function GET() {
+export async function GET(event) {
+    requireRole(event as any, ['admin', 'super_admin']);
 	try {
 		const admins = await prisma.admin.findMany({
 			select: {
@@ -21,14 +24,26 @@ export async function GET() {
 	}
 }
 
-export async function POST({ request }) {
+export async function POST(event) {
+    requireRole(event as any, ['super_admin']);
+    const { request } = event as any;
 	try {
-		const data = await request.json();
+        const raw = await request.json();
+        const data = trimObject(raw);
 		
 		// Validate required fields
-		if (!data.nama || !data.email || !data.password) {
+        if (!data.nama || !data.email || !data.password) {
 			return json({ error: 'Missing required fields' }, { status: 400 });
 		}
+        if (!isEmail(data.email)) {
+            return json({ error: 'Invalid email' }, { status: 400 });
+        }
+        if (!maxLength(data.nama, 120)) {
+            return json({ error: 'Nama terlalu panjang' }, { status: 400 });
+        }
+        if (String(data.password).length < 6) {
+            return json({ error: 'Password minimal 6 karakter' }, { status: 400 });
+        }
 
 		// Check if email already exists
 		const existingAdmin = await prisma.admin.findUnique({

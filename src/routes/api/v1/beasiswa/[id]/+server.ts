@@ -1,5 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
+import { requireAuth } from '$lib/server/auth';
+import { trimObject, isNonEmpty, parseIsoDate, isURL, maxLength } from '$lib/server/validation';
 
 export async function GET({ params }) {
 	try {
@@ -26,9 +28,26 @@ export async function GET({ params }) {
 	}
 }
 
-export async function PUT({ params, request }) {
+export async function PUT(event) {
+    const { params, request } = event as any;
+    requireAuth(event as any);
 	try {
-		const data = await request.json();
+        const raw = await request.json();
+        const data = trimObject(raw);
+
+        if (!isNonEmpty(data.judul) || !isNonEmpty(data.penyelenggara) || !isNonEmpty(data.deadline)) {
+            return json({ error: 'Missing required fields' }, { status: 400 });
+        }
+        if (!maxLength(data.judul, 200)) {
+            return json({ error: 'Judul terlalu panjang (maks 200)' }, { status: 400 });
+        }
+        if (data.link_pendaftaran && !isURL(data.link_pendaftaran)) {
+            return json({ error: 'Link pendaftaran harus URL yang valid' }, { status: 400 });
+        }
+        const deadlineDate = parseIsoDate(data.deadline);
+        if (!deadlineDate) {
+            return json({ error: 'Deadline tidak valid' }, { status: 400 });
+        }
 		
 		const beasiswa = await prisma.beasiswa.update({
 			where: { id_beasiswa: params.id },
@@ -37,7 +56,7 @@ export async function PUT({ params, request }) {
 				penyelenggara: data.penyelenggara,
 				lokasi: data.lokasi,
 				kategori: data.kategori,
-				deadline: new Date(data.deadline),
+                deadline: deadlineDate,
 				tipe_pendanaan: data.tipe_pendanaan,
 				deskripsi: data.deskripsi,
 				link_pendaftaran: data.link_pendaftaran
@@ -51,7 +70,9 @@ export async function PUT({ params, request }) {
 	}
 }
 
-export async function DELETE({ params }) {
+export async function DELETE(event) {
+    const { params } = event as any;
+    requireAuth(event as any);
 	try {
 		await prisma.beasiswa.delete({
 			where: { id_beasiswa: params.id }
