@@ -46,25 +46,13 @@
 <div class="space-y-6">
 	<div class="flex justify-between items-center">
 		<h2 class="text-2xl font-bold text-gray-900">Kelola Email</h2>
-		<button class="btn btn-primary">
-			<Mail size={16} class="mr-2" />
-			Kirim Email
-		</button>
 	</div>
 
 	<div class="bg-white rounded-xl shadow-sm border p-6">
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+		<div class="grid grid-cols-1 mb-6">
 			<div class="text-center">
 				<div class="text-3xl font-bold text-primary">{stats.totalSubscribers}</div>
 				<div class="text-sm text-gray-500">Total Subscribers</div>
-			</div>
-			<div class="text-center">
-				<div class="text-3xl font-bold text-green-600">0</div>
-				<div class="text-sm text-gray-500">Email Terkirim</div>
-			</div>
-			<div class="text-center">
-				<div class="text-3xl font-bold text-blue-600">0%</div>
-				<div class="text-sm text-gray-500">Open Rate</div>
 			</div>
 		</div>
 
